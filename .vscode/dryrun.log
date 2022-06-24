@@ -1,0 +1,8 @@
+make: Entering directory `/Users/lsemlali/Desktop/pipex'
+cc -Wall -Wextra -Werror   -c -o pipex.o pipex.c
+ 
+cc -Wall -Wextra -Werror   -c -o pipex_outils.o pipex_outils.c
+cd lbft && make && cd .. 
+cc -Wall -Wextra -Werror pipex.o pipex_outils.o lbft/libft.a -o pipex
+make: Leaving directory `/Users/lsemlali/Desktop/pipex'
+ 
