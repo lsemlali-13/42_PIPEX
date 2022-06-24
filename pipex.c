@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:04 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/06/24 06:33:17 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/06/24 07:05:06 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int ac, char *av[], char *env[])
 {
 	t_pipe	p;
 	int		fd[2];
+
 
 	if (ac != 5)
 		put_error("Error : you must input only 4 arguments");
