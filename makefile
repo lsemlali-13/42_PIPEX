@@ -1,5 +1,5 @@
-SRCS = pipex.c pipex_outils.c
-BSRCS = pipex_bonus.c pipex_outils.c
+SRCS = pipex.c pipex_outils.c put_error.c pipex_outils2.c
+BSRCS = pipex_bonus.c pipex_outils.c put_error.c pipex_outils2.c
 CFLAGS = -Wall -Wextra -Werror
 NAME = pipex
 OBJ = $(SRCS:.c=.o)

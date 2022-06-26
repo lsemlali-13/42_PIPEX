@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:23 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/06/23 16:44:05 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:07:07 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,20 @@ typedef struct s_pipe
 	int	file2;
 	int	pid1;
 	int	pid2;
+	int	**fd;
+	int id[99];
+	int	check;
 }	t_pipe;
 
 char	*get_path(char *s, char *cmd);
 void	frst_cmd(char **env, int *fd, char *cmd, int file1);
-void	next_cmd(char **env, int **fd, int i, char *cmd);
+void	next_cmd(char **env, t_pipe *p, int i, char *cmd);
 void	last_cmd(char **env, int *fd, char *cmd, int file);
+void	put_error(char *s, int h);
+int		sea_rch(char *s, int a);
+char	*handle_env(char *env[]);
+char	*skip_sl(char	*cmd);
+char	*get_path(char *s, char *cmd);
+void	ft_exit(char *sp[]);
 
 #endif

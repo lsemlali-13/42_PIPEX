@@ -6,85 +6,64 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:10 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/06/23 16:46:01 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:23:15 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*skip_sl(char	*cmd)
+void	ex_ecu(char *cmd, char *path, char *sp[], char *env[])
 {
-	char	*n_cmd;
-	int		i;
-
-	i = ft_strlen(cmd);
-	while (i >= 0)
+	if (execve(path, sp, env) == -1)
 	{
-		if (cmd[i] == '/')
-			break ;
-		i--;
-	}
-	n_cmd = ft_substr(cmd, i + 1, ft_strlen(cmd) - (i + 1));
-	return (n_cmd);
-}
-
-char	*get_path(char *s, char *cmd)
-{
-	char	**sp;
-	char	*n_cmd;
-	int		i;
-
-	s = ft_substr(s, 5, ft_strlen(s) - 5);
-	sp = ft_split(s, ':');
-	i = -1;
-	cmd = ft_strjoin("/", cmd);
-	while (sp[++i])
-	{
-		n_cmd = ft_strjoin(sp[i], cmd);
-		if (access(n_cmd, F_OK) == 0)
-			return (n_cmd);
-		n_cmd = NULL;
-	}
-	return (0);
+		put_error(cmd, 1);
+		if (sea_rch(cmd, '/'))
+			put_error(" : No such file or directory\n", 1);
+		else
+			put_error(" : Command not found\n", 1);
+		exit(1);
+	}	
 }
 
 void	frst_cmd(char **env, int *fd, char *cmd, int file1)
 {
 	char	**sp;
 	char	*path;
-
+	
+	close(fd[0]);
+	sp = ft_split(cmd, ' ');
+	if (ft_strncmp(sp[0], "exit", 4) == 0 && ft_strlen(sp[0]) == 4)
+		ft_exit(sp);
+	path = get_path(handle_env(env), sp[0]);
 	dup2(file1, 0);
 	close(file1);
-	sp = ft_split(cmd, ' ');
-	sp[0] = skip_sl(sp[0]);
-	path = get_path(env[6], sp[0]);
 	dup2(fd[1], 1);
-	close(fd[0]);
 	close(fd[1]);
-	execve(path, sp, env);
-	write(2, "hehe\n", 5);
+	ex_ecu(cmd, path, sp, env);
 }
 
-void	next_cmd(char **env, int **fd, int i, char *cmd)
+void	next_cmd(char **env, t_pipe *p, int i, char *cmd)
 {
 	char	**sp;
 	char	*path;
-	int		id;
-
-	id = fork();
-	if (id == 0)
+	
+	(*p).id[i] = fork();
+	if ((*p).id[i] == 0)
 	{
+		close((*p).fd[i + 1][0]);
+		close((*p).fd[i][1]);
 		sp = ft_split(cmd, ' ');
+		if (ft_strncmp(sp[0], "exit", 4) == 0 && ft_strlen(sp[0]) == 4)
+			ft_exit(sp);
 		sp[0] = skip_sl(sp[0]);
-		path = get_path(env[6], sp[0]);
-		dup2(fd[i][0], 0);
-		dup2(fd[i + 1][1], 1);
-		close(fd[i + 1][0]);
-		close(fd[i + 1][1]);
-		close(fd[i][0]);
-		close(fd[i][1]);
-		execve(path, sp, env);
+		path = get_path(handle_env(env), sp[0]);
+		dup2((*p).fd[i][0], 0);
+		dup2((*p).fd[i + 1][1], 1);
+		close((*p).fd[i + 1][1]);
+		close((*p).fd[i][0]);
+		ex_ecu(cmd, path, sp, env);
 	}
+	
 }
 
 void	last_cmd(char **env, int *fd, char *cmd, int file)
@@ -92,13 +71,15 @@ void	last_cmd(char **env, int *fd, char *cmd, int file)
 	char	**sp;
 	char	*path;
 
+	close(fd[1]);
 	sp = ft_split(cmd, ' ');
+	if (ft_strncmp(sp[0], "exit", 4) == 0 && ft_strlen(sp[0]) == 4)
+		ft_exit(sp);
 	sp[0] = skip_sl(sp[0]);
-	path = get_path(env[6], sp[0]);
+	path = get_path(handle_env(env), sp[0]);
 	dup2(fd[0], 0);
 	dup2(file, 1);
 	close(fd[0]);
 	close(file);
-	close(fd[1]);
-	execve(path, sp, env);
+	ex_ecu(cmd, path, sp, env);
 }
