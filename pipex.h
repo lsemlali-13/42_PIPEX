@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:23 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/07/02 03:22:15 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:43:26 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include "get_next_line/get_next_line.h"
 # define BUFFER_SIZE 1
+
 typedef struct s_pipe
 {
 	int	file1;
@@ -28,9 +29,9 @@ typedef struct s_pipe
 	int	pid1;
 	int	pid2;
 	int	**fd;
-	int id[99];
+	int	id[99];
 	int	check;
-	int cm;
+	int	cm;
 }	t_pipe;
 
 char	*get_path(char *s, char *cmd);
@@ -43,6 +44,6 @@ char	*handle_env(char *env[]);
 char	*skip_sl(char	*cmd);
 char	*get_path(char *s, char *cmd);
 void	ft_exit(char *sp[]);
-int		here_doc(char *str);
+int		here_doc(char *str, t_pipe *p, char *file);
 
 #endif

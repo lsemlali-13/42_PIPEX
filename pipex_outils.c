@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:10 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/07/02 05:14:01 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:58:29 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	frst_cmd(char **env, int *fd, char *cmd, int file1)
 {
 	char	**sp;
 	char	*path;
-	
+
 	close(fd[0]);
 	sp = ft_split(cmd, ' ');
 	if (ft_strncmp(sp[0], "exit", 4) == 0 && ft_strlen(sp[0]) == 4)
@@ -46,7 +46,7 @@ void	next_cmd(char **env, t_pipe *p, int i, char *cmd)
 {
 	char	**sp;
 	char	*path;
-	
+
 	(*p).id[i] = fork();
 	if ((*p).id[i] == 0)
 	{

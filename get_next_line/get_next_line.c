@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:57:20 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/07/01 16:52:45 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:59:30 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ char	*ft_join(int fd, char *buff)
 
 char	*get_next_line(int fd)
 {
-	char	*line;
-
+	char		*line;
 	static char	buff[2];
 
 	line = NULL;
