@@ -6,13 +6,13 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:57:07 by lsemlali          #+#    #+#             */
-/*   Updated: 2021/12/09 19:57:08 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/06/26 15:19:03 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	str_len(const char *s)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i + 1);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*str_join(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -32,8 +32,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len1;
 	size_t	len2;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = str_len(s1);
+	len2 = str_len(s2);
 	str = (char *)malloc(len1 + len2 + 1);
 	if (!str)
 		return (NULL);
@@ -65,7 +65,7 @@ int	ft_search(const char *s)
 	return (0);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*sub_str(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -88,7 +88,7 @@ void	ft_cut(char *buff)
 	int	i;
 	int	j;
 
-	i = ft_strlen(buff);
+	i = str_len(buff);
 	j = 0;
 	while (buff[i])
 		buff[j++] = buff[i++];

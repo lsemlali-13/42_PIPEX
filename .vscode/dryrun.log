@@ -1,8 +1,11 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/lsemlali/Desktop/pipex'
-cc -Wall -Wextra -Werror   -c -o pipex_outils.o pipex_outils.c
+cc -Wall -Wextra -Werror   -c -o pipex.o pipex.c
  
+cc -Wall -Wextra -Werror   -c -o pipex_outils.o pipex_outils.c
+cc -Wall -Wextra -Werror   -c -o put_error.o put_error.c
 cc -Wall -Wextra -Werror   -c -o pipex_outils2.o pipex_outils2.c
+cd lbft && make && cd .. 
 cc -Wall -Wextra -Werror pipex.o pipex_outils.o put_error.o pipex_outils2.o lbft/libft.a -o pipex
 make: Leaving directory `/Users/lsemlali/Desktop/pipex'
  

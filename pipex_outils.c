@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:10 by lsemlali          #+#    #+#             */
-/*   Updated: 2022/06/26 11:23:15 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/07/02 05:14:01 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	frst_cmd(char **env, int *fd, char *cmd, int file1)
 		ft_exit(sp);
 	path = get_path(handle_env(env), sp[0]);
 	dup2(file1, 0);
-	close(file1);
 	dup2(fd[1], 1);
 	close(fd[1]);
+	close(file1);
 	ex_ecu(cmd, path, sp, env);
 }
 
@@ -63,7 +63,6 @@ void	next_cmd(char **env, t_pipe *p, int i, char *cmd)
 		close((*p).fd[i][0]);
 		ex_ecu(cmd, path, sp, env);
 	}
-	
 }
 
 void	last_cmd(char **env, int *fd, char *cmd, int file)

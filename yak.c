@@ -1,17 +1,37 @@
-#include <unistd.h>
-#include <stdio.h>
 #include "pipex.h"
-int main(int ac, char *av[], char *env[])
+#include "get_next_line/get_next_line.h"
+
+int	here_doc(char *str)
 {
+	int fd[2];
+	pipe(fd);
+	char *buf;
 	char *s;
 	s = NULL;
-	while (1)
+
+	buf = get_next_line(0);
+	while (buf != NULL)
 	{
-		char *buf;
-		buf = malloc(6);
-		buf[5] = '\0';
-		read(0, buf, 5);
+		buf[ft_strlen(buf)] = 0;
+		if (ft_strncmp(buf, str, ft_strlen(buf) - 1) == 0 && ft_strlen(buf) - 1 == ft_strlen(str))
+			break ;
 		s = ft_strjoin(s, buf);
-		fprintf(stderr, "%s\n", s);
+		free(buf);
+		buf = get_next_line(0);
+	}
+
+	int id = fork();
+	if (id == 0)
+	{
+		close(fd[0]);
+		write(fd[1], s, ft_strlen(s));
+		close(fd[1]);
+		exit(1);
+	}
+	else
+	{
+		close(fd[1]);
+		wait(NULL);
+		return (fd[0]);
 	}
 }

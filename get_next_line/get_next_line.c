@@ -6,7 +6,7 @@
 /*   By: lsemlali <lsemlali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:57:20 by lsemlali          #+#    #+#             */
-/*   Updated: 2021/12/10 11:49:00 by lsemlali         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:52:45 by lsemlali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ char	*ft_read_f(int fd, char *buff)
 
 	line = NULL;
 	if (buff[0] != 0)
-		line = ft_strjoin(line, buff);
+		line = str_join(line, buff);
 	while (!ft_search(buff))
 	{
 		j = 0;
 		while (buff[j])
 			buff[j++] = 0;
-		i = read(fd, buff, BUFFER_SIZE);
+		i = read(fd, buff, 1);
 		if (i < 0 || (i == 0 && !line))
 			return (0);
-		line = ft_strjoin(line, buff);
-		if (i < BUFFER_SIZE && line)
+		line = str_join(line, buff);
+		if (i < 1 && line)
 			return (line);
 	}
 	return (line);
@@ -43,7 +43,7 @@ char	*ft_join(int fd, char *buff)
 
 	if (ft_search(buff))
 	{
-		line = ft_substr(buff, 0, ft_strlen(buff));
+		line = sub_str(buff, 0, str_len(buff));
 		if (!line)
 			return (NULL);
 		ft_cut(buff);
@@ -59,11 +59,12 @@ char	*ft_join(int fd, char *buff)
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	buff[BUFFER_SIZE + 1];
+	char	*line;
+
+	static char	buff[2];
 
 	line = NULL;
-	if (fd < 0 || read(fd, buff, 0) < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, buff, 0) < 0)
 		return (0);
 	line = ft_join(fd, buff);
 	return (line);
